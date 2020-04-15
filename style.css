@@ -1,0 +1,15 @@
+#grid {
+  width: 400px;
+  height: 600px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#input {
+  grid-column: 1/4;
+  text-align: right;
+}
+#zero {
+  grid-column: 1/3;
+}
