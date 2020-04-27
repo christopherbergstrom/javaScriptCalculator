@@ -15,12 +15,18 @@
   font-size: 2rem;
   border: 1px solid #000;
 }
+#grid div:hover {
+  cursor: pointer;
+}
 
 #input {
   grid-column: 1/5;
   text-align: right !important;
   background-color: #434547;
   padding: 0 2.5rem;
+}
+#input:hover {
+  cursor: default !important;
 }
 #zero {
   grid-column: 1/3;

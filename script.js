@@ -1,3 +1,4 @@
 window.onload = () => {
-  console.log("loaded");
+  let $1 = document.getElementById("$1");
+  console.log($1.innerHTML);
 }
