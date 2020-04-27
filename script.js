@@ -2,8 +2,9 @@ let operator = "";
 let num1 = 0;
 let num2 = 0;
 let decimalSet = true;
+let operatorSet = true;
+let numberSet = true;
 window.onload = function() {
-  // let $dot = document.getElementById("dot").addEventListener("click", numberPress);
   let $dot = document.getElementById("dot").addEventListener("click", function() {
     if (decimalSet) {
       decimalSet = false;
@@ -26,53 +27,60 @@ window.onload = function() {
   let div = document.getElementById("div").addEventListener("click", operatorPress);
   let input = document.getElementById("input");
   let sign = document.getElementById("sign").addEventListener("click", changeSign);
-  let equal = document.getElementById("equal").addEventListener("click", result);
+  let equal = document.getElementById("equal").addEventListener("click", function() {
+    result(true);
+  });
   let clear = document.getElementById("clear").addEventListener("click", reset);
 }
 function numberPress(num) {
-  if (num === ".") {
-    input.innerHTML += ".";
-  } else {
-    console.log(this.innerHTML);
-    if (input.innerHTML == 0) {
-      input.innerHTML = this.innerHTML;
+  if (numberSet) {
+    if (num === ".") {
+      input.innerHTML += ".";
     } else {
-      input.innerHTML += this.innerHTML;
+      if (input.innerHTML == 0) {
+        input.innerHTML = this.innerHTML;
+      } else {
+        input.innerHTML += this.innerHTML;
+      }
     }
   }
 }
 function operatorPress() {
-  operator = this.innerHTML;
-  console.log(operator);
-  if (num2 == 0) {
-    // console.log(parseInt(input.innerHTML));
-    if ((input.innerHTML).indexOf(".") > -1) {
-      num1 = parseFloat(input.innerHTML);
-    } else {
-      num1 = parseInt(input.innerHTML);
+  if (operatorSet) {
+    operatorSet = false;
+    toggleButtons();
+    numberSet = true;
+    numbersEnable();
+    operator = this.innerHTML;
+    console.log(operator);
+    if (num1 == 0) {
+      // console.log(parseInt(input.innerHTML));
+      if ((input.innerHTML).indexOf(".") > -1) {
+        num1 = parseFloat(input.innerHTML);
+      } else {
+        num1 = parseInt(input.innerHTML);
+      }
+      console.log("num1: " + num1);
     }
-    console.log("num1: " + num1);
     clearInput();
-  } else {
-    // console.log(parseInt(input.innerHTML));
-    if ((input.innerHTML).indexOf(".") > -1) {
-      num2 = parseFloat(input.innerHTML);
-    } else {
-      num2 = parseInt(input.innerHTML);
-    }
-    console.log("num2: " + num2);
-    clearInput();
-    result();
   }
 }
 function changeSign() {
   input.innerHTML = parseInt(input.innerHTML) * -1;
 }
 
-function result() {
+function result(equalBtn) {
+  operatorSet = true;
+  toggleButtons();
+  numberSet = false
+  numbersDisable();
   if (num2 == 0) {
     // console.log(parseInt(input.innerHTML));
-    num2 = parseInt(input.innerHTML);
+    if ((input.innerHTML).indexOf(".") > -1) {
+      num2 = parseFloat(input.innerHTML);
+    } else {
+      num2 = parseInt(input.innerHTML);
+    }
     console.log("num2: " + num2);
     clearInput();
   }
@@ -105,12 +113,45 @@ function result() {
   num2 = 0;
 }
 function reset() {
+  // operator = "";
+  operatorSet = true;
   decimalSet = true;
+  numberSet = true;
+  removeDisabled();
   num1 = 0;
   num2 = 0;
   input.innerHTML = 0;
 }
 function clearInput() {
+  // operator = "";
   decimalSet = true;
   input.innerHTML = 0;
+}
+function toggleButtons() {
+  let math = document.getElementsByClassName("math");
+  for (let i = 0; i < math.length; i++) {
+    math[i].classList.toggle("disabled");
+  }
+}
+function numbersEnable() {
+  let numbers = document.getElementsByClassName("number");
+  for (let i = 0; i < numbers.length; i++) {
+    numbers[i].classList.remove("disabled");
+  }
+}
+function numbersDisable() {
+  let numbers = document.getElementsByClassName("number");
+  for (let i = 0; i < numbers.length; i++) {
+    numbers[i].classList.add("disabled");
+  }
+}
+function removeDisabled() {
+  let numbers = document.getElementsByClassName("number");
+  for (let i = 0; i < numbers.length; i++) {
+    numbers[i].classList.remove("disabled");
+  }
+  let math = document.getElementsByClassName("math");
+  for (let i = 0; i < math.length; i++) {
+    math[i].classList.remove("disabled");
+  }
 }

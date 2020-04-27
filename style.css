@@ -40,3 +40,6 @@
 .top {
   background-color: #6e7071;
 }
+.disabled {
+  cursor: not-allowed !important;
+}
